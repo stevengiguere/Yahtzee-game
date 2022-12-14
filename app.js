@@ -1,9 +1,11 @@
-const express = require("express"); //checked
-const bodyParser = require("body-parser"); //checked
-const ejs = require("ejs"); //checked
+const express = require("express");
+const bodyParser = require("body-parser");
+const ejs = require("ejs");
 const mongoose = require("mongoose");
+
 mongoose.set('strictQuery', true);
 mongoose.connect('mongodb://127.0.0.1:27017/yahtzeeGame');
+
 const Schema = mongoose.Schema;
 const model = mongoose.model;
 
@@ -33,9 +35,8 @@ const Players = new Schema({
     totalLoses: Number
 });
 
-//Player model
+//Collection : players
 const Player = model('Player', Players);
-
 
 //TESTING DATA ENTRY IN DB
 const steven = new Player({
@@ -46,7 +47,6 @@ const steven = new Player({
     totalWins: 0,
     totalLoses: 0
 });
-
 
 //CREATING PLAYER EXAMPLE
 //adding the player to the database (comment this to avoid cloned data)
@@ -59,13 +59,17 @@ const steven = new Player({
 //     //saved!!
 // });
 
-
 //SHOW all PLAYERS EXAMPLE in an array of objects
 Player.find((error, players) => {
     console.log(players);
 })
 
+/*********************************************************** */
 
+//including functions for Yahtzee Rules
+const rules = require("./rules.js");
+rules.faces("Steven"," Giguere");
+//initialize the server
 const app = express();
 
 app.set('view engine', 'ejs');
