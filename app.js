@@ -2,11 +2,13 @@ const express = require("express"); //checked
 const bodyParser = require("body-parser"); //checked
 const ejs = require("ejs"); //checked
 const mongoose = require("mongoose");
-mongoose.connect('mongodb://localhost:27017/YahtzeeGame');
-mongoose.set('strictQuery', false);
+mongoose.set('strictQuery', true);
+mongoose.connect('mongodb://127.0.0.1:27017/yahtzeeGame');
+const Schema = mongoose.Schema;
+const model = mongoose.model;
 
-
-
+// All Data Types available for mongoose schemas
+//
 // String
 // Number
 // Date
@@ -19,30 +21,49 @@ mongoose.set('strictQuery', false);
 // Map
 
 //Player Schema
-const playerSchema = new mongoose.Schema({
-    name: String,
-    gamePlayed: Number,
+const Players = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    currentScore: Number,
+    gamePlayed: Number, //Number of game played
     highestScore: Number,
     totalWins: Number,
     totalLoses: Number
 });
 
 //Player model
-const Player = mongoose.model('Player', playerSchema);
+const Player = model('Player', Players);
 
 
-//
-const player = new Player({
+//TESTING DATA ENTRY IN DB
+const steven = new Player({
     name: 'Steven', // Input in the creation of a player
-    gamePlayer: 0 //Number of game played
+    currentScore: 0,
+    gamePlayed: 0,
+    highestScore: 0,
+    totalWins: 0,
+    totalLoses: 0
 });
 
+
+//CREATING PLAYER EXAMPLE
 //adding the player to the database (comment this to avoid cloned data)
-player.save((err) => {
-    if (err)
-        console.log(err);
-    //saved!!
-});
+// steven.save((err) => {
+//     if (err)
+//         console.log(err);
+//     else
+//         console.log("yeah it work!");
+
+//     //saved!!
+// });
+
+
+//SHOW all PLAYERS EXAMPLE in an array of objects
+Player.find((error, players) => {
+    console.log(players);
+})
 
 
 const app = express();
@@ -53,6 +74,9 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(express.static(__dirname + "public"));
+
+
+
 
 //Generating routes
 app.get('/', (req, res) => {
