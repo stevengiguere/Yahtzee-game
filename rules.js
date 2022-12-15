@@ -62,29 +62,45 @@ function subTotal() {
 // SECOND SECTION need to [].sort
 //
 
-// 4-of-a-kind
+// 3 and 4-of-a-kind
 function allOfAKind(dices, number) {
 
-    const sortedHand = dices.sort();
-
-    //number of same dice of a kind (3 or 4) // for later, we will be able to add more dices
+    const sortedDices = dices.sort();
+    let isSameValue;
+    //number of possibilities
     for (i = 0; i < ((dices.length + 1) - number); i++) {
-        if (sortedHand[i] === sortedHand[i + 1] && sortedHand[i] === sortedHand[i + 2]) {
 
-            //Return the total value of dices
+        isSameValue = 1;
+
+        //check if the value is the same for the 'number'OfAKind
+        for (j = 0; j < (number - 1); j++)
+
+            //Verify if every number are identicals
+            if (sortedDices[i + j] === sortedDices[i + j + 1])
+                isSameValue++;
+
+        // After verification, return the total value of the dices
+        if (isSameValue === number)
             return dices.reduce((a, b) => a + b);
-        }
     }
-    console.log("you didn't get enough number of a kind (at least 3 or 4) ");
+    console.log("you didn't get enough 'number'OfAKind");
     return 0;
 
 }
+
 // fullhouse (3-of-a-kind + pair)
-// 
-// 
+function fullHouse(dices) {
+
+    //if I have 3 different value, return 0
+
+}
+
 // low straight
-// 
+function lowStraight(dices) {}
+
 // high straight
+function hiStraight(dices) {}
+
 // YATHZEE (all of a kind)
 function yahtzee(dices, haveOne) {
     for (i = 0; i < (dices.length - 1); i++) {

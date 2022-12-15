@@ -65,7 +65,8 @@ const steven = new Player({
 
 //SHOW all PLAYERS EXAMPLE in an array of objects
 Player.find((error, players) => {
-    console.log(players);
+    console.log(error);
+    console.log("players : " + players);
 })
 
 /************************************************************/
@@ -76,7 +77,14 @@ const rules = require("./rules.js");
 
 
 // Roll test
-const playerHand = [4, 2, 3, 2, 2];
+const playerHand = [5, 5, 2, 5, 2];
+
+//four of a kind
+console.log("four of a kind : " + rules.allOfAKind(playerHand, 4));
+
+//three of a kind
+console.log("three of a kind : " + rules.allOfAKind(playerHand, 3));
+
 
 // Choose first section example here : 5
 // Replace with the input later on in the home page
@@ -88,7 +96,7 @@ const playerHand = [4, 2, 3, 2, 2];
 // console.log(rules.faces(playerHand, 4));
 // console.log(rules.faces(playerHand, 5));
 // console.log(rules.faces(playerHand, 6));
-console.log(rules.allOfAKind(playerHand, 4));
+
 // rules.yahtzee(playerHand, true);
 
 /************************************************************/
