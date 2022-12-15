@@ -3,11 +3,15 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 
+
+
 mongoose.set('strictQuery', true);
 mongoose.connect('mongodb://127.0.0.1:27017/yahtzeeGame');
 
 const Schema = mongoose.Schema;
 const model = mongoose.model;
+
+
 
 // All Data Types available for mongoose schemas
 //
@@ -64,11 +68,31 @@ Player.find((error, players) => {
     console.log(players);
 })
 
-/*********************************************************** */
+/************************************************************/
+
 
 //including functions for Yahtzee Rules
 const rules = require("./rules.js");
-rules.faces("Steven"," Giguere");
+
+
+// Roll test
+const playerHand = [4, 2, 3, 2, 2];
+
+// Choose first section example here : 5
+// Replace with the input later on in the home page
+
+
+// console.log(rules.faces(playerHand, 1));
+// console.log(rules.faces(playerHand, 2));
+// console.log(rules.faces(playerHand, 3));
+// console.log(rules.faces(playerHand, 4));
+// console.log(rules.faces(playerHand, 5));
+// console.log(rules.faces(playerHand, 6));
+console.log(rules.allOfAKind(playerHand, 4));
+// rules.yahtzee(playerHand, true);
+
+/************************************************************/
+
 //initialize the server
 const app = express();
 
@@ -77,7 +101,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-app.use(express.static(__dirname + "public"));
+app.use(express.static("public"));
 
 
 
@@ -87,6 +111,12 @@ app.get('/', (req, res) => {
 
     //home page
     res.render('home');
+
+    // req.body.dice1
+    // req.body.dice2
+    // req.body.dice3
+    // req.body.dice4
+    // req.body.dice5
 
 });
 
