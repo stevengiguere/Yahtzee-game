@@ -3,7 +3,8 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 
-
+//including functions for Yahtzee Rules
+const rules = require("./rules.js");
 
 mongoose.set('strictQuery', true);
 mongoose.connect('mongodb://127.0.0.1:27017/yahtzeeGame');
@@ -11,108 +12,13 @@ mongoose.connect('mongodb://127.0.0.1:27017/yahtzeeGame');
 const Schema = mongoose.Schema;
 const model = mongoose.model;
 
-
-
-// All Data Types available for mongoose schemas
-//
-// String
-// Number
-// Date
-// Buffer
-// Boolean
-// Mixed
-// ObjectId
-// Array
-// Decimal128
-// Map
-
-//Player Schema
-const Players = new Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    currentScore: Number,
-    gamePlayed: Number, //Number of game played
-    highestScore: Number,
-    totalWins: Number,
-    totalLoses: Number
-});
-
-//Collection : players
-const Player = model('Player', Players);
-
-//TESTING DATA ENTRY IN DB
-const steven = new Player({
-    name: 'Steven', // Input in the creation of a player
-    currentScore: 0,
-    gamePlayed: 0,
-    highestScore: 0,
-    totalWins: 0,
-    totalLoses: 0
-});
-
-//CREATING PLAYER EXAMPLE
-//adding the player to the database (comment this to avoid cloned data)
-// steven.save((err) => {
-//     if (err)
-//         console.log(err);
-//     else
-//         console.log("yeah it work!");
-
-//     //saved!!
-// });
-
-//SHOW all PLAYERS EXAMPLE in an array of objects
-Player.find((error, players) => {
-    console.log(error);
-    console.log("players : " + players);
-})
-
-/************************************************************/
-
-
-//including functions for Yahtzee Rules
-const rules = require("./rules.js");
-
-
-// Roll test
-const playerHand = [5, 5, 2, 5, 2];
-
-//four of a kind
-console.log("four of a kind : " + rules.allOfAKind(playerHand, 4));
-
-//three of a kind
-console.log("three of a kind : " + rules.allOfAKind(playerHand, 3));
-
-
-// Choose first section example here : 5
-// Replace with the input later on in the home page
-
-
-// console.log(rules.faces(playerHand, 1));
-// console.log(rules.faces(playerHand, 2));
-// console.log(rules.faces(playerHand, 3));
-// console.log(rules.faces(playerHand, 4));
-// console.log(rules.faces(playerHand, 5));
-// console.log(rules.faces(playerHand, 6));
-
-// rules.yahtzee(playerHand, true);
-
-/************************************************************/
-
 //initialize the server
 const app = express();
-
+app.use(express.static(__dirname + "/public"));
 app.set('view engine', 'ejs');
-
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-app.use(express.static("public"));
-
-
-
 
 //Generating routes
 app.get('/', (req, res) => {
@@ -130,8 +36,60 @@ app.get('/', (req, res) => {
 
 
 //POSTS
+app.post('/', (req, res) => {
+
+
+    //button starting a regular game
+
+    const newGame = [];
+
+    console
+})
 
 //MONITORING
 app.listen(3000, function () {
+
+    // ROLL TEST
+    /************************************************************/
+    let playerHand = [5, 5, 5, 5, 2];
+
+    //three of a kind
+    //rules.allOfAKind(playerHand, 3);
+
+    //four of a kind
+    //rules.allOfAKind(playerHand, 4);
+
+    // Choose first section example here : 5
+    // Replace with the input later on in the home page
+
+    playerHand = [1, 1, 1, 5, 2];
+    rules.faces(playerHand, 1);
+
+    playerHand = [2, 2, 1, 5, 2];
+    rules.faces(playerHand, 2);
+
+    playerHand = [1, 3, 3, 5, 3];
+    rules.faces(playerHand, 3);
+
+    playerHand = [4, 4, 1, 4, 4];
+    rules.faces(playerHand, 4);
+
+    playerHand = [5, 5, 1, 5, 2];
+    rules.faces(playerHand, 5);
+
+    playerHand = [6, 1, 6, 6, 2];
+    rules.faces(playerHand, 6);
+
+    // rules.yahtzee(playerHand, true);
+
+    /************************************************************/
+
+
+
+
+
+
+
+
     console.log("Server started on port 3000");
 });

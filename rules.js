@@ -1,29 +1,5 @@
 //functions of every Yahtzee rule(except for joker rule)
 
-/******************************** */
-// First Section
-// 1 < function faces(dices, 1)
-// 2 
-// 3 
-// 4
-// 5
-// 6
-// Subtotal 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/******************************** */
-
-//functions 
-//
-// 
-//
 // FIRST SECTION
 // 
 // Every dice where the dice.value === button.value (from 1-6)
@@ -45,61 +21,75 @@ function faces(dices, faceValue) {
     scoreFirstSection += score;
     allfaces++;
 
-    if (allfaces != 6) {
+    if (allfaces > 6) return score;
+    else {
+        totalFirstSection();
         return score;
     }
-    return score;
-    subTotal;
 }
 
-function subTotal() {
+function totalFirstSection() {
 
-    console.log("subtotal = " + scoreFirstSection);
+
+
+    if (scoreFirstSection >= 63) {
+        console.log("you score more than 63pts, you earn a 35pts bonus")
+        console.log("subtotal before bonus = " + scoreFirstSection);
+        scoreFirstSection += 35;
+        console.log("subtotal = " + scoreFirstSection);
+    } else {
+        console.log("subtotal = " + scoreFirstSection);
+    }
+
     return scoreFirstSection;
 }
 // When 1st section fulfilled, if total of the first section >= 63, then subtotal + bonus 35pts
 
-// SECOND SECTION need to [].sort
-//
-
-// 3 and 4-of-a-kind
+// SECOND SECTION
+// (3 and 4-of-a-kind)
 function allOfAKind(dices, number) {
 
     const sortedDices = dices.sort();
-    let isSameValue;
+
     //number of possibilities
     for (i = 0; i < ((dices.length + 1) - number); i++) {
 
-        isSameValue = 1;
-
         //check if the value is the same for the 'number'OfAKind
-        for (j = 0; j < (number - 1); j++)
+        for (j = 0; j < (number - 1); j++) {
 
-            //Verify if every number are identicals
-            if (sortedDices[i + j] === sortedDices[i + j + 1])
-                isSameValue++;
+            //if this dice different from next dice, go to next possibility
+            if (sortedDices[i + j] != sortedDices[i + j + 1]) break;
 
-        // After verification, return the total value of the dices
-        if (isSameValue === number)
-            return dices.reduce((a, b) => a + b);
+            // After verification, return the total value of the dices
+            if (number === (j + 2)) {
+                const score = dices.reduce((a, b) => a + b);
+                console.log("you get a " + number + " of a kind, congrats, you score " + score + "pts");
+                return score;
+
+            }
+        }
+
     }
-    console.log("you didn't get enough 'number'OfAKind");
+    console.log("you didn't get enough 'number'OfAKind, you score 0pts");
     return 0;
 
 }
 
-// fullhouse (3-of-a-kind + pair)
+// fullhouse (3-of-a-kind + pair, only in 5 dices game)
 function fullHouse(dices) {
+
+    const sortedDices = dices.sort();
 
     //if I have 3 different value, return 0
 
+
 }
 
-// low straight
-function lowStraight(dices) {}
+// low straight and high straight
+function allStraight(dices, number) {
+    const sortedDices = dices.sort();
+}
 
-// high straight
-function hiStraight(dices) {}
 
 // YATHZEE (all of a kind)
 function yahtzee(dices, haveOne) {
@@ -109,13 +99,19 @@ function yahtzee(dices, haveOne) {
         }
     }
     if (haveOne === true)
-        return 100;
-    return 50;
+        return 20 * dices;
+    return 10 * dices;
 
 }
 
+
+
+
 module.exports = {
     faces,
+    totalFirstSection,
     allOfAKind,
+    fullHouse,
+    allStraight,
     yahtzee
 };
