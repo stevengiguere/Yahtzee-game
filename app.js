@@ -84,10 +84,10 @@ app.listen(3000, function () {
     // playerHand = [1, 1, 5, 5, 5];
     // rules.fullHouse(playerHand); // FULL HOUSE
 
-    playerHand = [1, 2, 3, 4, 4];
+    playerHand = [1, 3, 4, 5, 6];
     console.log(rules.allStraight(playerHand, 4, 30)); // LOW STRAIGHT
 
-    playerHand = [1, 2, 3, 4, 4];
+    playerHand = [2, 3, 4, 5, 6];
     console.log(rules.allStraight(playerHand, 5, 40)); // HIGH STRAIGHT
 
     // rules.yahtzee(playerHand, true);

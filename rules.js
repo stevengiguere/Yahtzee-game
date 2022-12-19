@@ -101,16 +101,22 @@ function fullHouse(dices) {
 function allStraight(dices, number, score) {
     const sortedDices = dices.sort();
     const possibilities = dices.length + 1;
-
-    //TODO
+    let kind_count = 1;
+    
     for (i = 0; i < (possibilities - number); i++) {
+        for (j = 0; j < number; j++) {
 
-        if (dices[i] != dices[i + 1])
-            break;
-        else
-            return 0;
+            if (sortedDices[i + j] === (sortedDices[i + j + 1] - 1))
+                kind_count += 1;
+            else if (sortedDices[i + j] != (sortedDices[i + j + 1]))
+                break;
+
+        }
+        if (kind_count === number)
+            return score;
+        kind_count = 1;
     }
-    return score;
+
 
 
 }
