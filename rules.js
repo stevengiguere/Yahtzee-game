@@ -30,18 +30,22 @@ function faces(dices, faceValue) {
 
 function totalFirstSection() {
 
-
+    const subtotal = [];
+    let bonus;
 
     if (scoreFirstSection >= 63) {
         console.log("you score more than 63pts, you earn a 35pts bonus")
         console.log("subtotal before bonus = " + scoreFirstSection);
         scoreFirstSection += 35;
         console.log("subtotal = " + scoreFirstSection);
+        bonus = true;
+        subtotal.push(scoreFirstSection, bonus)
     } else {
         console.log("subtotal = " + scoreFirstSection);
+        bonus = false;
     }
-
-    return scoreFirstSection;
+    console.log(subtotal);
+    return subtotal;
 }
 // When 1st section fulfilled, if total of the first section >= 63, then subtotal + bonus 35pts
 
@@ -50,18 +54,21 @@ function totalFirstSection() {
 function allOfAKind(dices, number) {
 
     const sortedDices = dices.sort();
+    const thisDice = 0;
+    const possibilities = dices.length + 1;
 
     //number of possibilities
-    for (i = 0; i < ((dices.length + 1) - number); i++) {
+    for (i = 0; i < (possibilities - number); i++) {
 
         //check if the value is the same for the 'number'OfAKind
         for (j = 0; j < (number - 1); j++) {
 
             //if this dice different from next dice, go to next possibility
-            if (sortedDices[i + j] != sortedDices[i + j + 1]) break;
+            if (sortedDices[thisDice] != sortedDices[thisDice++]) break;
+
 
             // After verification, return the total value of the dices
-            if (number === (j + 2)) {
+            if (number === (thisDice + 1)) {
                 const score = dices.reduce((a, b) => a + b);
                 console.log("you get a " + number + " of a kind, congrats, you score " + score + "pts");
                 return score;
@@ -80,14 +87,32 @@ function fullHouse(dices) {
 
     const sortedDices = dices.sort();
 
-    //if I have 3 different value, return 0
-
+    // check value if "1st = 2nd" AND "4th = Last", middle must be = to the first or last one 
+    // i.e. : [2, 2, 3, 3, 3] AND [1, 1, 1, 5, 5] true
+    if (dices[0] === dices[1])
+        if (dices[3] === dices[4])
+            if (dices[2] === dices[1] || dices[2] === dices[3])
+                return 25;
+    return 0;
 
 }
 
 // low straight and high straight
-function allStraight(dices, number) {
+function allStraight(dices, number, score) {
     const sortedDices = dices.sort();
+    const possibilities = dices.length + 1;
+
+    //TODO
+    for (i = 0; i < (possibilities - number); i++) {
+
+        if (dices[i] != dices[i + 1])
+            break;
+        else
+            return 0;
+    }
+    return score;
+
+
 }
 
 

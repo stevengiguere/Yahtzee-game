@@ -1,17 +1,23 @@
-const rules = require(".rules.js");
+const rules = require("./rules.js");
 
 function standardGame(players) {
 
-    const dices = 5; //set of 5 dices
-    const faces = 6; //regular dice
+    const diceSet = {
+        dices: 5,
+        faces: 6
+    };
+
     const rolls = 3; //3 rolls each turn
-    const players = {
+    const player = {
         name: String,
         currentScore: Number,
     };
-    scoreboard = [players];
 
-
+    for (i = 0; i < 6; i++)
+        diceSet.push(6)
+    scoreboard = [players,
+        rules.faces(diceSet),
+    ];
 
     console.log();
 
