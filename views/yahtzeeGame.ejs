@@ -1,0 +1,68 @@
+<%- include('partials/header') -%>
+
+
+<h2> Let's Play Yahtzee <%= thisplayer[0] %> !!! </h2>
+
+<!-- Generating player-->
+
+<div class="scoreBoard">
+
+    <div class="scoreBoard-item">
+
+        <div class="sb-info">PLAYERS</div>
+        <div class="sb-info">1</div>
+        <div class="sb-info">2</div>
+        <div class="sb-info">3</div>
+        <div class="sb-info">4</div>
+        <div class="sb-info">5</div>
+        <div class="sb-info">6</div>
+        <div class="sb-info">subtotal</div>
+
+        <div class="sb-info">3-of-a-kind</div>
+        <div class="sb-info">4-of-a-kind</div>
+        <div class="sb-info">Fullhouse</div>
+        <div class="sb-info">Low straight</div>
+        <div class="sb-info">High straight</div>
+
+        <div class="sb-info">Chance</div>
+        <div class="sb-info">Yahtzee</div>
+        <!--At the end of game, return the total to the players collection for the current player-->
+        <div class="sb-info">Total</div>
+    </div>
+
+    <div class="scoreBoard-item">
+
+        <!-- generated the player with a blank game -->
+        <div class="sb-info"><%= thisplayer[0] %></div>
+        <div class="sb-info"><%= thisplayer[1] %></div>
+        <div class="sb-info"><%= thisplayer[2] %></div>
+        <div class="sb-info"><%= thisplayer[3] %></div>
+        <div class="sb-info">4</div>
+        <div class="sb-info">5</div>
+        <div class="sb-info">6</div>
+        <div class="sb-info">subtotal</div>
+
+        <div class="sb-info">3-of-a-kind</div>
+        <div class="sb-info">4-of-a-kind</div>
+        <div class="sb-info">Fullhouse</div>
+        <div class="sb-info">Low straight</div>
+        <div class="sb-info">High straight</div>
+
+        <div class="sb-info">Chance</div>
+        <div class="sb-info">Yahtzee</div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+<%- include('partials/footer') -%>

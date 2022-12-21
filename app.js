@@ -12,6 +12,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/yahtzeeGame');
 const Schema = mongoose.Schema;
 const model = mongoose.model;
 
+const newGame = [];
+
 //initialize the server
 const app = express();
 app.use(express.static(__dirname + "/public"));
@@ -20,11 +22,54 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+const allPlayers = [];
+
+//Database settings
+//=================================================
+//Creating a Schema
+const Players = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    gamePlayed: Number, //Number of game played
+    highestScore: Number,
+    totalWins: Number,
+    totalLoses: Number,
+    totalBonus: Number,
+    totalYahtzees: Number
+});
+
+//Collection : players
+const Player = model('Player', Players);
+
+//=================================================
+//Database settings
+
+
 //Generating routes
 app.get('/', (req, res) => {
 
-    //home page
-    res.render('home');
+    Player.find({}, (err, allPlayers) => {
+        if (err) console.log(err);
+
+        console.log(allPlayers.name);
+
+        //home page
+        res.render('home', {
+            allPlayers: allPlayers
+        });
+
+
+    })
+
+});
+
+app.get('/newGame', (req, res) => {
+
+    res.render('yahtzeeGame', {
+        thisplayer: newGame
+    });
 
     // req.body.dice1
     // req.body.dice2
@@ -35,71 +80,62 @@ app.get('/', (req, res) => {
 });
 
 
+
 //POSTS
-app.post('/', (req, res) => {
+app.post('/createPlayer', (req, res) => {
+
+    const playerName = req.body.playerName;
+
+    //Creating an object
+    const player = new Player({
+        name: playerName, // Input in the creation of a player
+        currentScore: 0,
+        gamePlayed: 0,
+        highestScore: 0,
+        totalWins: 0,
+        totalLoses: 0,
+        totalBonus: 0,
+        totalYahtzees: 0
+    });
 
 
+    //Adding the player to the database
+    player.save((err) => {
+        if (err)
+            console.log(err);
+        else
+            console.log("Successfully added the new player");
+
+        //saved!!
+    });
+
+    res.redirect('/');
+
+});
+
+app.post('/newGame', (req, res) => {
+
+
+    //be sure that the array is empty
+    while(newGame.length > 0) {
+        newGame.pop();
+    }
+
+
+    const player = req.body.selectedPlayer;
+
+    newGame.push(player);
+
+    newGame.push(0,0,0,0,0,0,0,0,0,0,0,0,0,0);
     //button starting a regular game
 
-    const newGame = [];
+    res.redirect('/newGame');
 
-    newGame.push();
 
-    console.log(newGame);
-})
+});
+
 
 //MONITORING
 app.listen(3000, function () {
-
-    // ROLL TEST
-    /************************************************************/
-    let playerHand = [5, 5, 5, 5, 2];
-
-    // FIRST SECTION
-
-    // playerHand = [2, 2, 1, 5, 2];
-    // rules.faces(playerHand, 1);
-
-    // playerHand = [2, 2, 1, 5, 2];
-    // rules.faces(playerHand, 2);
-
-    // playerHand = [1, 3, 3, 5, 3];
-    // rules.faces(playerHand, 3);
-
-    // playerHand = [4, 4, 1, 4, 4];
-    // rules.faces(playerHand, 4);
-
-    // playerHand = [5, 5, 1, 5, 2];
-    // rules.faces(playerHand, 5);
-
-    // playerHand = [6, 1, 6, 6, 2];
-    // rules.faces(playerHand, 6);
-
-    //three of a kind
-    //rules.allOfAKind(playerHand, 3);
-
-    //four of a kind
-    //rules.allOfAKind(playerHand, 4);
-
-    // playerHand = [1, 1, 5, 5, 5];
-    // rules.fullHouse(playerHand); // FULL HOUSE
-
-    playerHand = [1, 3, 4, 5, 6];
-    console.log(rules.allStraight(playerHand, 4, 30)); // LOW STRAIGHT
-
-    playerHand = [2, 3, 4, 5, 6];
-    console.log(rules.allStraight(playerHand, 5, 40)); // HIGH STRAIGHT
-
-    // rules.yahtzee(playerHand, true);
-
-    /************************************************************/
-
-
-
-
-
-
-
-
     console.log("Server started on port 3000");
 });

@@ -2,8 +2,43 @@ html,
 body {
     background-color: #222;
     color: #BBB;
+    text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
     font-size: 3rem;
+}
+
+.container {
+    margin-bottom: 25px;
+}
+
+.scoreBoard {
+    border: 1px dotted #D33;
+    display: grid;
+    height: 50%;
+    font-size: 20px;
+    margin: 5px;
+    width: 100%;
+
+}
+
+.scoreBoard-item {
+    padding: 5px;
+    text-align: left;
+    width: 200px;
+}
+
+.sb-info {
+    border: 1px solid #DDD;
+}
+
+.footer {
+    position: fixed;
+    width: 400px;
+    bottom: 0;
+    left: 50%;
+    margin-left: -200px;
 }

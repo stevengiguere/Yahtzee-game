@@ -31,21 +31,22 @@ function faces(dices, faceValue) {
 function totalFirstSection() {
 
     const subtotal = [];
-    let bonus;
+
 
     if (scoreFirstSection >= 63) {
         console.log("you score more than 63pts, you earn a 35pts bonus")
         console.log("subtotal before bonus = " + scoreFirstSection);
         scoreFirstSection += 35;
         console.log("subtotal = " + scoreFirstSection);
-        bonus = true;
-        subtotal.push(scoreFirstSection, bonus)
+
+        subtotal.push(scoreFirstSection, bonus);
     } else {
         console.log("subtotal = " + scoreFirstSection);
-        bonus = false;
+
+        subtotal.push(scoreFirstSection, bonus);
     }
     console.log(subtotal);
-    return subtotal;
+    return subtotal >= 63;
 }
 // When 1st section fulfilled, if total of the first section >= 63, then subtotal + bonus 35pts
 
@@ -102,8 +103,9 @@ function allStraight(dices, number, score) {
     const sortedDices = dices.sort();
     const possibilities = dices.length + 1;
     let kind_count = 1;
-    
+
     for (i = 0; i < (possibilities - number); i++) {
+
         for (j = 0; j < number; j++) {
 
             if (sortedDices[i + j] === (sortedDices[i + j + 1] - 1))
@@ -112,12 +114,12 @@ function allStraight(dices, number, score) {
                 break;
 
         }
+
         if (kind_count === number)
-            return score;
+            return ((number * 10) - 10);
         kind_count = 1;
     }
-
-
+    return 0;
 
 }
 

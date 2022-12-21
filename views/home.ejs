@@ -1,28 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="ressources/img/favicon.ico" type="image/x-icon">
-
-    <!-- My stylesheet -->
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
-    
-
-    <title>🃏 Yahtzee game 🃏</title>
-</head>
-
-<body>
-
-    <h1>🃏 Yahtzee game 🃏</h1>
+<%- include('partials/header') -%>
 
 
+<h2> Create or Select a player name </h2>
+
+<!-- Create a new player -->
+<form action="/createPlayer" method="post">
+    <input name="playerName" type="text" autocomplete="off">
+    <button type="submit">Create a player</button>
 
 
-    <div class="footer"><p>&copy; Steven Gigu&egrave;re :: 2022</p></div>
-    
-</body>
+</form>
 
-</html>
+<!-- Select an existing player -->
+<form action="/newGame" method="post">
+    <label for="players">Select your player</label>
+    <select name="selectedPlayer" id="players">
+        <% allPlayers.forEach((player) => { %>
+        <option name="<%= player.id %>" value="<%= player.name %>"><%= player.name %></option>
+        <% }) %>
+    </select>
+
+    <button type="submit">Let's Play Yahtzee!!!</button>
+</form>
+
+<%- include('partials/footer') -%>
